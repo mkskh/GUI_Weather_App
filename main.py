@@ -15,7 +15,21 @@ root.resizable(False,False)
 
 
 def get_weather():
-    pass
+    city=text_box.get()
+
+    geolocator = Nominatim(user_agent='geoapiExercises')
+    location = geolocator.geocode(city)
+    obj = TimezoneFinder()
+    result = obj.timezone_at(lng=location.longitude, lat=location.latitude)
+
+    home=pytz.timezone(result)
+    local_time = datetime.now(home)
+    current_time=local_time.strftime('%I:%M %p')
+    clock.config(text=current_time)
+    name.config(text='CURRENT TIME')
+
+
+
 
 #searchbox
 search_img = PhotoImage(file='img/search.png')
@@ -38,6 +52,14 @@ insert_search_icon.place(x=400, y=34)
 log_img = PhotoImage(file='img/logo.png')
 insert_logo_img = Label(image=log_img)
 insert_logo_img.place(x=150, y=100)
+
+
+#time
+name = Label(root, font=('Arial', 15, 'bold'))
+name.place(x=30, y=100)
+clock = Label(root, font=('Arial', 15, 'bold'))
+clock.place(x=30, y=130)
+
 
 #labelbar
 
